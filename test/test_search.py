@@ -49,5 +49,5 @@ def test_linear_sorted(array, checked, expected):
                              ([2, 4, 7, 9, 15], 20, {"found": False, "index": -1}),
                          ])
 def test_binary_sorted(array, checked, expected):
-    actual = search.linear_sorted(array, checked)
+    actual = search.binary_sorted(array, checked)
     testing_util.assert_search_result(actual, expected)

@@ -1,6 +1,6 @@
 import os
 
-import base_algorithms
+from sources.algorithms import base_algorithms
 import data_handler
 import measure
 import util

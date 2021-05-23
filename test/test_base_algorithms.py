@@ -1,6 +1,7 @@
-import base_algorithms
-import test_util
 import pytest
+
+import test_util
+from sources.algorithms import base_algorithms
 
 
 @pytest.mark.parametrize("input_list,input_element,expected",

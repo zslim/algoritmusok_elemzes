@@ -5,7 +5,7 @@ import log
 import measure
 import util
 from measure import InputType
-from sources.algorithms import base_algorithms, search
+from sources.algorithms import base, search
 
 
 LOGGER = log.get_logger(__name__)

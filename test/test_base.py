@@ -1,7 +1,7 @@
 import pytest
 
 import testing_util
-from sources.algorithms import base_algorithms
+from sources.algorithms import base
 
 
 @pytest.mark.parametrize("input_list,input_element,expected",
@@ -15,7 +15,7 @@ from sources.algorithms import base_algorithms
                          ]
                          )
 def test_inclusion(input_list, input_element, expected):
-    result = base_algorithms._does_include(input_list, input_element)
+    result = base._does_include(input_list, input_element)
     assert result == expected
 
 
@@ -26,7 +26,7 @@ def test_inclusion(input_list, input_element, expected):
                              (["ed", "al", "wi"], ["ho", "ed"], ["ed"])
                          ])
 def test_intersection(array1, array2, expected):
-    result = base_algorithms.intersection(array1, array2)
+    result = base.intersection(array1, array2)
     testing_util.assert_list_without_order(result, expected)
 
 
@@ -37,7 +37,7 @@ def test_intersection(array1, array2, expected):
                              ([8, 3, 5, 6], [], [3, 5, 6, 8]),
                          ])
 def test_union(array1, array2, expected):
-    result = base_algorithms.union(array1, array2)
+    result = base.union(array1, array2)
     testing_util.assert_list_without_order(result, expected)
 
 
@@ -49,5 +49,5 @@ def test_union(array1, array2, expected):
                              ([1, 6, 9], [], [1, 6, 9])
                          ])
 def test_merge_sorted(array1, array2, expected):
-    result = base_algorithms.merge_sorted(array1, array2)
+    result = base.merge_sorted(array1, array2)
     testing_util.assert_list(result, expected)

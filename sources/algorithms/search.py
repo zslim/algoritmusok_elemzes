@@ -1,3 +1,6 @@
+import math
+
+
 def linear_unsorted(array, checked):
     search_result = {"found": False, "index": -1}
     for i, element in enumerate(array):
@@ -44,6 +47,32 @@ def binary_sorted(array, checked):
             break
         else:
             low = center + 1
+    return search_result
+
+
+def jump_sorted(array, checked):
+    search_result = {"found": False, "index": -1}
+    if checked < array[0] or checked > array[-1]:
+        return search_result
+
+    n = len(array)
+    block_length = math.floor(math.sqrt(n))
+    low = 0
+    high = block_length
+
+    while array[min(n, high) - 1] < checked:
+        low = high
+        high = low + block_length
+        if low >= n:
+            return search_result
+
+    block = array[low:high]
+    for i, element in enumerate(block):
+        if element == checked:
+            _set_search_result(search_result, i + low)
+            break
+        if element > checked:
+            break
     return search_result
 
 

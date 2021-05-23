@@ -54,7 +54,8 @@ def main():
     # collect(search.linear_unsorted, InputType.ARRAY_AND_NUMBER)
     # collect(search.strazsas_unsorted, InputType.ARRAY_AND_NUMBER)
     # collect(search.linear_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
-    collect(search.binary_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
+    # collect(search.binary_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
+    collect(search.jump_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
 
 
 if __name__ == '__main__':

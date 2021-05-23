@@ -39,3 +39,15 @@ def test_intersection(array1, array2, expected):
 def test_union(array1, array2, expected):
     result = base_algorithms.union(array1, array2)
     testing_util.assert_list_without_order(result, expected)
+
+
+@pytest.mark.parametrize("array1,array2,expected",
+                         [
+                             ([1, 2], [3, 4], [1, 2, 3, 4]),
+                             ([0, 3, 5], [1, 2, 5], [0, 1, 2, 3, 5]),
+                             ([-4, 3, 7], [5, 8], [-4, 3, 5, 7, 8]),
+                             ([1, 6, 9], [], [1, 6, 9])
+                         ])
+def test_merge_sorted(array1, array2, expected):
+    result = base_algorithms.merge_sorted(array1, array2)
+    testing_util.assert_list(result, expected)

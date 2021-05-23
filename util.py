@@ -1,3 +1,8 @@
-def print_list_of_dicts(data):
-    for dictionary in data:
-        print(dictionary, "\n")
+from datetime import datetime
+
+
+def create_file_name(function):
+    now = datetime.now()
+    timestamp = f"{now.year}{now.month}{now.day}_{now.hour}{now.minute}{now.second}"
+    file_name = f"{function.__name__}_{timestamp}.csv"
+    return file_name

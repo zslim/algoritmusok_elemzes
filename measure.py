@@ -1,5 +1,6 @@
 import random
 import time
+
 import log
 
 LOGGER = log.get_logger(__name__)
@@ -31,6 +32,7 @@ def measure_single_arg_function(function, input_lengths, number_of_runs):
 def measure_double_arg_function(function, input_lengths, number_of_runs):
     result = []
     for i, length_1 in enumerate(input_lengths):
+        LOGGER.info(f"Running <{function.__name__}>")
         for length_2 in input_lengths[i:]:
             LOGGER.info(f"input 1 length: {length_1}, input 2 length: {length_2}")
             LOGGER.info(f"Starting {number_of_runs} runs")

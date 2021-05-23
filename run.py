@@ -31,12 +31,12 @@ def measure_single_arg_function(function, input_lengths, number_of_runs):
 def measure_double_arg_function(function, input_lengths, number_of_runs):
     result = []
     for i, length_1 in enumerate(input_lengths):
-        input_1 = generate_numeric_input(length_1)
         for length_2 in input_lengths[i:]:
-            input_2 = generate_numeric_input(length_2)
             LOGGER.info(f"input 1 length: {length_1}, input 2 length: {length_2}")
             LOGGER.info(f"Starting {number_of_runs} runs")
             for n in range(number_of_runs):
+                input_1 = generate_numeric_input(length_1)
+                input_2 = generate_numeric_input(length_2)
                 record = recording(function, input_1, input_2)
                 result.append(record)
     return result

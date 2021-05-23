@@ -45,15 +45,3 @@ def merge(a, b):
     else:
         result += a[i:]
     return result
-
-
-if __name__ == '__main__':
-    c = [1, 4, 3, 7, 1]
-    d = [0, 1, 6, 9, 3]
-    print(intersection(c, d))
-    print(intersection([True, True], [False, True]))
-    print(union(c, d))
-
-    e = [1, 3, 4, 6, 7]
-    f = [2, 4, 6, 8, 10]
-    print(merge(e, f))

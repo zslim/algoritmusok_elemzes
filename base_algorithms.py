@@ -1,26 +1,23 @@
+def _does_include(array, element):
+    i = 0
+    while i < len(array) and element != array[i]:
+        i += 1
+    return i < len(array)
+
+
 def intersection(a, b):
     result = []
-    n = len(a)
-    m = len(b)
-    for i in range(n):
-        j = 0
-        while j < m and a[i] != b[j]:
-            j += 1
-        if j < m:
-            result.append(a[i])
+    for a_element in a:
+        if _does_include(b, a_element):
+            result.append(a_element)
     return result
 
 
 def union(a: list, b: list):
     result = a
-    n = len(a)
-    m = len(b)
-    for j in range(m):
-        i = 0
-        while i < n and a[i] != b[j]:
-            i += 1
-        if i >= n:
-            result.append(b[j])
+    for b_element in b:
+        if not _does_include(a, b_element):
+            result.append(b_element)
     return result
 
 

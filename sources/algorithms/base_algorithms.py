@@ -21,7 +21,7 @@ def union(a: list, b: list):
     return result
 
 
-def merge(a, b):
+def merge_sorted(a, b):
     result = []
     n = len(a)
     m = len(b)

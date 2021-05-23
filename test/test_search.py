@@ -1,6 +1,6 @@
 import pytest
 
-import test_util
+import testing_util
 from sources.algorithms import search
 
 
@@ -13,4 +13,4 @@ from sources.algorithms import search
                          ])
 def test_linear_unsorted(array, checked, expected):
     actual = search.linear_unsorted(array, checked)
-    test_util.assert_search_result(actual, expected)
+    testing_util.assert_search_result(actual, expected)

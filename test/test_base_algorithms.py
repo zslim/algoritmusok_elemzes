@@ -1,6 +1,6 @@
 import pytest
 
-import test_util
+import testing_util
 from sources.algorithms import base_algorithms
 
 
@@ -27,7 +27,7 @@ def test_inclusion(input_list, input_element, expected):
                          ])
 def test_intersection(array1, array2, expected):
     result = base_algorithms.intersection(array1, array2)
-    test_util.assert_list_without_order(result, expected)
+    testing_util.assert_list_without_order(result, expected)
 
 
 @pytest.mark.parametrize("array1,array2,expected",
@@ -38,4 +38,4 @@ def test_intersection(array1, array2, expected):
                          ])
 def test_union(array1, array2, expected):
     result = base_algorithms.union(array1, array2)
-    test_util.assert_list_without_order(result, expected)
+    testing_util.assert_list_without_order(result, expected)

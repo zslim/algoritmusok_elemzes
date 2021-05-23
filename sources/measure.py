@@ -7,12 +7,16 @@ import log
 LOGGER = log.get_logger(__name__)
 
 
-def recording(function, *args, **kwargs):
+def recording(function, returns_list, *args, **kwargs):
     start = time.time()
     returned_value = function(*args, **kwargs)
     stop = time.time()
     record = {"function": function.__name__, "parameter lengths": [len(e) for e in args],
               "seconds": stop - start, "length of returned": len(returned_value)}
+    if returns_list:
+        record["length of returned"] = len(returned_value)
+    else:
+        record["returned"] = returned_value
     return record
 
 
@@ -23,17 +27,17 @@ def generate_numeric_input(list_length, do_sort):
     return array
 
 
-def measure_single_arg_function(function, input_lengths, number_of_runs, sorted_input):
+def measure_single_arg_function(function, input_lengths, number_of_runs, sorted_input, returns_list):
     result = []
     for length in input_lengths:
         for n in range(number_of_runs):
             input_list = generate_numeric_input(length, sorted_input)
-            record = recording(function, input_list)
+            record = recording(function, returns_list, input_list)
             result.append(record)
     return result
 
 
-def measure_double_arg_function(function, input_lengths, number_of_runs, sorted_input):
+def measure_double_arg_function(function, input_lengths, number_of_runs, sorted_input, returns_list):
     result = []
     start = datetime.now()
     for i, length_1 in enumerate(input_lengths):
@@ -44,7 +48,7 @@ def measure_double_arg_function(function, input_lengths, number_of_runs, sorted_
             for n in range(number_of_runs):
                 input_1 = generate_numeric_input(length_1, sorted_input)
                 input_2 = generate_numeric_input(length_2, sorted_input)
-                record = recording(function, input_1, input_2)
+                record = recording(function, returns_list, input_1, input_2)
                 result.append(record)
             LOGGER.info(f"Elapsed time: {datetime.now() - start}")
     return result

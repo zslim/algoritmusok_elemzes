@@ -14,7 +14,7 @@ def intersection(a, b):
 
 
 def union(a: list, b: list):
-    result = a
+    result = a[:]
     for b_element in b:
         if not _does_include(a, b_element):
             result.append(b_element)

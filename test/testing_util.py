@@ -10,7 +10,7 @@ def assert_list_without_order(actual: list, expected: list):
 
 def assert_search_result(actual, expected):
     """
-    Search result is supposed to be a tuple: (found: bool, index: int)
+    Search result is supposed to be a dict: {found: bool, index: int}
     index is -1 if not found
     """
     assert actual["found"] == expected["found"]

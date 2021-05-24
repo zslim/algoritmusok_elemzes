@@ -12,10 +12,10 @@ def recording(function, returns_list, *args, **kwargs):
     start = time.time()
     returned_value = function(*args, **kwargs)
     stop = time.time()
-    record = {"function": function.__name__, "parameter lengths": [util.get_size(e) for e in args],
+    record = {"function": function.__name__, "parameterLengths": [util.get_size(e) for e in args],
               "seconds": stop - start}
     if returns_list:
-        record["length of returned"] = len(returned_value)
+        record["lengthOfReturned"] = len(returned_value)
     else:
         record["returned"] = returned_value
     return record

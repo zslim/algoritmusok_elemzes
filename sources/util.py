@@ -13,3 +13,10 @@ def get_size(param):
         return len(param)
     else:
         return type(param)
+
+
+def parse_search_result(dict_string):
+    content = dict_string[1:-1]
+    cut = [d.split(":") for d in content.split(",")]
+    result = {"found": cut[0][1] == " True", "index": int(cut[1][1])}
+    return result

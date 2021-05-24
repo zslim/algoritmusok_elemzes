@@ -5,31 +5,31 @@ def _does_include(array, element):
     return i < len(array)
 
 
-def intersection(a, b):
+def intersection(array1, array2):
     result = []
-    for a_element in a:
-        if _does_include(b, a_element):
-            result.append(a_element)
+    for element in array1:
+        if _does_include(array2, element):
+            result.append(element)
     return result
 
 
-def union(a: list, b: list):
-    result = a[:]
-    for b_element in b:
-        if not _does_include(a, b_element):
-            result.append(b_element)
+def union(array1: list, array2: list):
+    result = array1[:]
+    for element in array2:
+        if not _does_include(array1, element):
+            result.append(element)
     return result
 
 
-def merge_sorted(a, b):
+def merge_sorted(array1, array2):
     result = []
-    n = len(a)
-    m = len(b)
+    n = len(array1)
+    m = len(array2)
     i = 0
     j = 0
     while i < n and j < m:
-        a_current = a[i]
-        b_current = b[j]
+        a_current = array1[i]
+        b_current = array2[j]
         if a_current < b_current:
             result.append(a_current)
             i += 1
@@ -41,7 +41,7 @@ def merge_sorted(a, b):
             result.append(b_current)
             j += 1
     if i >= n:
-        result += b[j:]
+        result += array2[j:]
     else:
-        result += a[i:]
+        result += array1[i:]
     return result

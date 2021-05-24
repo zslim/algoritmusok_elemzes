@@ -17,7 +17,7 @@ def repeat(function, input_type: InputType, sorted_input, returns_list):
     increment = 1000
 
     input_lengths = range(input_low, input_high + 1, increment)
-    number_of_runs = 10
+    number_of_runs = 100
 
     measurer = None
 
@@ -34,8 +34,8 @@ def repeat(function, input_type: InputType, sorted_input, returns_list):
     return result
 
 
-def collect(function, input_type: InputType, sorted_input=False, returns_list=False):
-    out_folder = "out"
+def generate_and_write(function, input_type: InputType, sorted_input=False, returns_list=False):
+    out_folder = os.path.join("out", "out_data")
     os.makedirs(out_folder, exist_ok=True)
     file_name = util.create_file_name(function)
     out_path = os.path.join(out_folder, file_name)
@@ -46,16 +46,16 @@ def collect(function, input_type: InputType, sorted_input=False, returns_list=Fa
 
 def main():
     # Base algorithms
-    # collect(base_algorithms.intersection, InputType.TWO_ARRAYS, returns_list=True)
-    # collect(base_algorithms.union, InputType.TWO_ARRAYS, returns_list=True)
-    # collect(base_algorithms.merge_sorted, InputType.TWO_ARRAYS, sorted_input=True, returns_list=True)
+    # generate_and_write(base.intersection, InputType.TWO_ARRAYS, returns_list=True)
+    # generate_and_write(base.union, InputType.TWO_ARRAYS, returns_list=True)
+    generate_and_write(base.merge_sorted, InputType.TWO_ARRAYS, sorted_input=True, returns_list=True)
 
     # Search algorithms
-    # collect(search.linear_unsorted, InputType.ARRAY_AND_NUMBER)
-    # collect(search.strazsas_unsorted, InputType.ARRAY_AND_NUMBER)
-    # collect(search.linear_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
-    # collect(search.binary_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
-    collect(search.jump_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
+    generate_and_write(search.linear_unsorted, InputType.ARRAY_AND_NUMBER)
+    generate_and_write(search.strazsas_unsorted, InputType.ARRAY_AND_NUMBER)
+    generate_and_write(search.linear_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
+    generate_and_write(search.binary_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
+    generate_and_write(search.jump_sorted, InputType.ARRAY_AND_NUMBER, sorted_input=True)
 
 
 if __name__ == '__main__':

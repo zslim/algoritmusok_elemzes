@@ -1,4 +1,5 @@
 from datetime import datetime
+import pandas
 import random
 import time
 
@@ -6,6 +7,8 @@ import log
 import util
 
 LOGGER = log.get_logger(__name__)
+RANDOM_LOW = 0
+RANDOM_HIGH = 100000
 
 
 def recording(function, returns_list, *args, **kwargs):
@@ -22,7 +25,7 @@ def recording(function, returns_list, *args, **kwargs):
 
 
 def generate_numeric_array(list_length, do_sort):
-    array = [random.randint(0, 10000) for _ in range(list_length)]
+    array = [random.randint(RANDOM_LOW, RANDOM_HIGH) for _ in range(list_length)]
     if do_sort:
         array.sort()
     return array
@@ -47,7 +50,7 @@ def measure_function_one_array_one_number(function, input_lengths, number_of_run
         LOGGER.info(f"Input length: {length}; starting {number_of_runs} runs")
         for n in range(number_of_runs):
             input_array = generate_numeric_array(length, sorted_input)
-            input_number = random.randint(0, 10000)
+            input_number = random.randint(RANDOM_LOW, RANDOM_HIGH)
             record = recording(function, returns_list, input_array, input_number)
             data.append(record)
     LOGGER.info(f"Ran {function.__name__} for this long: {datetime.now() - start}")

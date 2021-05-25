@@ -47,12 +47,12 @@ def generate_and_write(name, function_list, algorithm_type, sorted_input=False):
 
 def main():
     # Base algorithms
-    # generate_and_write("intersection", base.intersection, AlgorithmType.BASE)
-    # generate_and_write("union", base.union, AlgorithmType.BASE)
-    # generate_and_write("merge", base.merge_sorted, AlgorithmType.BASE, sorted_input=True)
+    # generate_and_write("intersection", [base.intersection], AlgorithmType.BASE)
+    # generate_and_write("union", [base.union], AlgorithmType.BASE)
+    # generate_and_write("merge", [base.merge_sorted], AlgorithmType.BASE, sorted_input=True)
 
     # Search algorithms
-    generate_and_write("search_unsorted", [search.linear_unsorted, search.strazsas_unsorted], AlgorithmType.SEARCH)
+    # generate_and_write("search_unsorted", [search.linear_unsorted, search.strazsas_unsorted], AlgorithmType.SEARCH)
     generate_and_write("search_sorted",
                        [search.linear_sorted, search.binary_sorted, search.jump_sorted],
                        AlgorithmType.SEARCH,

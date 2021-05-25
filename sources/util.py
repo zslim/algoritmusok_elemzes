@@ -25,7 +25,8 @@ def parse_search_result(dict_string):
 def assert_all_elements_equal(list_of_results):
     first = list_of_results[0]
     for element in list_of_results:
-        assert element == first
+        if element != first:
+            raise AssertionError(f"Unequal values: {first}, {element}")
 
 
 def concat_function_names(function_list):

@@ -1,13 +1,12 @@
-import random
 import time
 from datetime import datetime
 
+import input_generator
 import log
 import util
+from input_generator import ArrayOrder
 
 LOGGER = log.get_logger(__name__)
-RANDOM_LOW = 0
-RANDOM_HIGH = 100000
 
 
 class AlgorithmType:
@@ -16,23 +15,29 @@ class AlgorithmType:
     SORT = "sort"
 
 
-def recording(function_list, algorithm_type, *args, **kwargs):
+def recording(function_list, algorithm_type, input_control, *args, **kwargs):
     record = {}
     returned_values = []
 
     # Recording running times & storing returned values
     for func in function_list:
         start = time.time()
-        returned_values.append(func(*args, **kwargs))
+        returned_value = func(*args, **kwargs)
         stop = time.time()
         record[func.__name__] = stop - start
+        returned_values.append(returned_value)
 
-    # If all returned values are the same, record it (or the length)
-    util.assert_all_elements_equal(returned_values)
+    # Check if all returned values are the same
+    try:
+        util.assert_all_elements_equal(returned_values)
+    except AssertionError as e:
+        print(e)
+
+    # Record input control note
     if algorithm_type == AlgorithmType.SEARCH:
-        record["returned"] = returned_values[0]["found"]
-    else:
-        record["lengthOfReturned"] = len(returned_values[0])
+        record["found"] = input_control
+    elif algorithm_type == AlgorithmType.SORT:
+        record["input_control"] = input_control
 
     # Store param lengths and/or values
     for i, param in enumerate(args):
@@ -41,20 +46,19 @@ def recording(function_list, algorithm_type, *args, **kwargs):
     return record
 
 
-def generate_numeric_array(list_length, do_sort):
-    array = [random.randint(RANDOM_LOW, RANDOM_HIGH) for _ in range(list_length)]
-    if do_sort:
-        array.sort()
-    return array
-
-
 def measure_sorting_algorithms(function_list, input_lengths, number_of_runs, sorted_input):
     result = []
     start = datetime.now()
     for length in input_lengths:
         for n in range(number_of_runs):
-            input_list = generate_numeric_array(length, sorted_input)
-            record = recording(function_list, AlgorithmType.SORT, input_list)
+            if n % 3 == 1:
+                input_order = ArrayOrder.SORTED
+            elif n % 3 == 2:
+                input_order = ArrayOrder.REVERSE
+            else:
+                input_order = ArrayOrder.RANDOM
+            input_list = input_generator.generate_numeric_array(length, input_order)
+            record = recording(function_list, AlgorithmType.SORT, input_order, input_list)
             result.append(record)
     LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
     return result
@@ -66,9 +70,9 @@ def measure_search_algorithms(function_list, input_lengths, number_of_runs, sort
     for length in input_lengths:
         LOGGER.info(f"Input length: {length}; starting {number_of_runs} runs")
         for n in range(number_of_runs):
-            input_array = generate_numeric_array(length, sorted_input)
-            input_number = random.randint(RANDOM_LOW, RANDOM_HIGH)
-            record = recording(function_list, AlgorithmType.SEARCH, input_array, input_number)
+            find_it = n % 2 == 0
+            input_array, input_number = input_generator.generate_search_input(length, sorted_input, find_it)
+            record = recording(function_list, AlgorithmType.SEARCH, find_it, input_array, input_number)
             data.append(record)
     LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
     return data
@@ -76,15 +80,16 @@ def measure_search_algorithms(function_list, input_lengths, number_of_runs, sort
 
 def measure_base_algorithms(function_list, input_lengths, number_of_runs, sorted_input):
     result = []
+    input_order = ArrayOrder.SORTED if sorted_input else ArrayOrder.RANDOM
     start = datetime.now()
     for i, length_1 in enumerate(input_lengths):
         for length_2 in input_lengths[i:]:
             LOGGER.info(f"Input 1 length: {length_1}, input 2 length: {length_2}")
             LOGGER.info(f"Starting {number_of_runs} runs")
             for n in range(number_of_runs):
-                input_1 = generate_numeric_array(length_1, sorted_input)
-                input_2 = generate_numeric_array(length_2, sorted_input)
-                record = recording(function_list, AlgorithmType.BASE, input_1, input_2)
+                input_1 = input_generator.generate_numeric_array(length_1, input_order)
+                input_2 = input_generator.generate_numeric_array(length_2, input_order)
+                record = recording(function_list, AlgorithmType.BASE, None, input_1, input_2)
                 result.append(record)
             LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
     return result

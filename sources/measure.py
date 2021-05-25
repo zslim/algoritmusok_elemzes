@@ -1,7 +1,6 @@
-from datetime import datetime
-import pandas
 import random
 import time
+from datetime import datetime
 
 import log
 import util
@@ -11,16 +10,34 @@ RANDOM_LOW = 0
 RANDOM_HIGH = 100000
 
 
-def recording(function, returns_list, *args, **kwargs):
-    start = time.time()
-    returned_value = function(*args, **kwargs)
-    stop = time.time()
-    record = {"function": function.__name__, "parameterLengths": [util.get_size(e) for e in args],
-              "seconds": stop - start}
-    if returns_list:
-        record["lengthOfReturned"] = len(returned_value)
+class AlgorithmType:
+    BASE = "base"
+    SEARCH = "search"
+    SORT = "sort"
+
+
+def recording(function_list, algorithm_type, *args, **kwargs):
+    record = {}
+    returned_values = []
+
+    # Recording running times & storing returned values
+    for func in function_list:
+        start = time.time()
+        returned_values.append(func(*args, **kwargs))
+        stop = time.time()
+        record[func.__name__] = stop - start
+
+    # If all returned values are the same, record it (or the length)
+    util.assert_all_elements_equal(returned_values)
+    if algorithm_type == AlgorithmType.SEARCH:
+        record["returned"] = returned_values[0]["found"]
     else:
-        record["returned"] = returned_value
+        record["lengthOfReturned"] = len(returned_values[0])
+
+    # Store param lengths and/or values
+    for i, param in enumerate(args):
+        param_info = util.get_param_info(param)
+        record[f"param_{i + 1}_{param_info[0]}"] = param_info[1]
     return record
 
 
@@ -31,19 +48,19 @@ def generate_numeric_array(list_length, do_sort):
     return array
 
 
-def measure_function_one_array(function, input_lengths, number_of_runs, sorted_input, returns_list):
+def measure_sorting_algorithms(function_list, input_lengths, number_of_runs, sorted_input):
     result = []
     start = datetime.now()
     for length in input_lengths:
         for n in range(number_of_runs):
             input_list = generate_numeric_array(length, sorted_input)
-            record = recording(function, returns_list, input_list)
+            record = recording(function_list, AlgorithmType.SORT, input_list)
             result.append(record)
-    LOGGER.info(f"Ran {function.__name__} for this long: {datetime.now() - start}")
+    LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
     return result
 
 
-def measure_function_one_array_one_number(function, input_lengths, number_of_runs, sorted_input, returns_list):
+def measure_search_algorithms(function_list, input_lengths, number_of_runs, sorted_input):
     data = []
     start = datetime.now()
     for length in input_lengths:
@@ -51,13 +68,13 @@ def measure_function_one_array_one_number(function, input_lengths, number_of_run
         for n in range(number_of_runs):
             input_array = generate_numeric_array(length, sorted_input)
             input_number = random.randint(RANDOM_LOW, RANDOM_HIGH)
-            record = recording(function, returns_list, input_array, input_number)
+            record = recording(function_list, AlgorithmType.SEARCH, input_array, input_number)
             data.append(record)
-    LOGGER.info(f"Ran {function.__name__} for this long: {datetime.now() - start}")
+    LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
     return data
 
 
-def measure_function_two_arrays(function, input_lengths, number_of_runs, sorted_input, returns_list):
+def measure_base_algorithms(function_list, input_lengths, number_of_runs, sorted_input):
     result = []
     start = datetime.now()
     for i, length_1 in enumerate(input_lengths):
@@ -67,13 +84,7 @@ def measure_function_two_arrays(function, input_lengths, number_of_runs, sorted_
             for n in range(number_of_runs):
                 input_1 = generate_numeric_array(length_1, sorted_input)
                 input_2 = generate_numeric_array(length_2, sorted_input)
-                record = recording(function, returns_list, input_1, input_2)
+                record = recording(function_list, AlgorithmType.BASE, input_1, input_2)
                 result.append(record)
-            LOGGER.info(f"Been running {function.__name__} for this long: {datetime.now() - start}")
+            LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
     return result
-
-
-class InputType:
-    ONE_ARRAY = "one array"
-    ARRAY_AND_NUMBER = "array and number"
-    TWO_ARRAYS = "two arrays"

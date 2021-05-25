@@ -1,5 +1,7 @@
 import logging
 
+import util
+
 
 def get_logger(name):
     logging.basicConfig(level=logging.INFO,
@@ -7,6 +9,5 @@ def get_logger(name):
     return logging.getLogger(name)
 
 
-def print_list_of_dicts(data):
-    for dictionary in data:
-        print(dictionary, "\n")
+def get_elapsed_time_log_string(function_list, now, start):
+    return f"Elapsed time running {util.concat_function_names(function_list)}: {now - start}"

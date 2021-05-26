@@ -10,7 +10,7 @@ class ArrayOrder:
     RANDOM = "random"
 
 
-def generate_numeric_array(list_length, array_order=ArrayOrder.RANDOM):
+def generate_numeric_array(list_length, array_order):
     array = [random.randint(RANDOM_LOW, RANDOM_HIGH) for _ in range(list_length)]
     if array_order == ArrayOrder.SORTED:
         array.sort()

@@ -1,4 +1,4 @@
-import sort
+from algorithms import sort
 
 
 def _does_include(array, element):

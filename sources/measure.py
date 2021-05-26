@@ -22,8 +22,12 @@ def recording(function_list, algorithm_type, input_control, *args, **kwargs):
     # Recording running times & storing returned values
     for func in function_list:
         start = time.time()
-        returned_value = func(*args, **kwargs)
-        stop = time.time()
+        try:
+            returned_value = func(*args, **kwargs)
+        except RecursionError:
+            returned_value = "recursion error"
+        finally:
+            stop = time.time()
         record[func.__name__] = stop - start
         returned_values.append(returned_value)
 
@@ -31,7 +35,7 @@ def recording(function_list, algorithm_type, input_control, *args, **kwargs):
     try:
         util.assert_all_elements_equal(returned_values)
     except AssertionError as e:
-        print(e)
+        LOGGER.info(e)
 
     # Record input control note
     if algorithm_type == AlgorithmType.SEARCH:

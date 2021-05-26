@@ -93,10 +93,20 @@ def quicksort_partition(array, low, high):
     return pivot_position
 
 
-def quicksort(array, low=0, high=-1):
+def quicksort_in_place(array, low=0, high=-1):
     if high == -1:
         high = len(array) - 1
     if low < high:
         pivot_index = quicksort_partition(array, low, high)
-        quicksort(array, low, pivot_index - 1)
-        quicksort(array, pivot_index + 1, high)
+        quicksort_in_place(array, low, pivot_index - 1)
+        quicksort_in_place(array, pivot_index + 1, high)
+
+
+def quicksort(array):
+    if array == []:
+        return array
+    out = array[:]
+    pivot = out[0]
+    lesser = quicksort([e for e in out[1:] if e < pivot])
+    greater = quicksort([e for e in out[1:] if e >= pivot])
+    return lesser + [pivot] + greater

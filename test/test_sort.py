@@ -47,9 +47,16 @@ def test_enhanced_cocktail_sort(array, expected):
 
 
 @pytest.mark.parametrize("array,expected", test_cases)
+def test_quicksort_in_place(array, expected):
+    in_array = array[:]
+    sort.quicksort_in_place(in_array)
+    testing_util.assert_list(in_array, expected)
+
+
+@pytest.mark.parametrize("array,expected", test_cases)
 def test_quicksort(array, expected):
-    sort.quicksort(array)
-    testing_util.assert_list(array, expected)
+    actual = sort.quicksort(array)
+    testing_util.assert_list(actual, expected)
 
 
 # @pytest.mark.skip

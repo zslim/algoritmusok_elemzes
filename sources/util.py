@@ -24,9 +24,13 @@ def parse_search_result(dict_string):
 
 def assert_all_elements_equal(list_of_results):
     first = list_of_results[0]
+    printed_results = "\n".join([str(result) for result in list_of_results])
     for element in list_of_results:
-        if element != first:
-            raise AssertionError(f"Unequal values: {first}, {element}")
+        comparisons = [a == b for a, b in zip(first, element)]
+        if not all(comparisons):
+            fails = [numbers for numbers, match in zip(zip(first, element), comparisons) if not match]
+            print(f"Fails: {fails}")
+            raise AssertionError(f"Unequal values:\n{printed_results}")
 
 
 def concat_function_names(function_list):

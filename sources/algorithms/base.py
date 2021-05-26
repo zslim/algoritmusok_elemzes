@@ -51,6 +51,6 @@ def merge_sorted(array1, array2):
 
 
 def merge_unsorted(array1, array2):
-    sort.quicksort(array1)
-    sort.quicksort(array2)
+    sort.quicksort_in_place(array1)
+    sort.quicksort_in_place(array2)
     return merge_sorted(array1, array2)

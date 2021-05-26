@@ -5,7 +5,7 @@ import log
 import measure
 import util
 from measure import AlgorithmType
-from sources.algorithms import base, search
+from sources.algorithms import base, search, sort
 
 
 LOGGER = log.get_logger(__name__)
@@ -57,6 +57,12 @@ def main():
                        [search.linear_sorted, search.binary_sorted, search.jump_sorted],
                        AlgorithmType.SEARCH,
                        sorted_input=True)
+
+    # Sort algorithms
+    generate_and_write("sorting",
+                       [sort.insertion_sort, sort.bubble_sort, sort.selection_sort, sort.comb_sort,
+                        sort.enhanced_cocktail_sort, sort.quicksort],
+                       AlgorithmType.SORT)
 
 
 if __name__ == '__main__':

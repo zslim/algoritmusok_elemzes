@@ -23,8 +23,8 @@ def test_linear_unsorted(array, checked, expected):
                              ([1, 7, 2, 8], 4, {"found": False, "index": -1}),
                              ([], 3, {"found": False, "index": -1})
                          ])
-def test_strazsas_unsorted(array, checked, expected):
-    actual = search.strazsas_unsorted(array, checked)
+def test_sentinel_unsorted(array, checked, expected):
+    actual = search.sentinel_unsorted(array, checked)
     testing_util.assert_search_result(actual, expected)
 
 

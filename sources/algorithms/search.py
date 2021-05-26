@@ -10,7 +10,7 @@ def linear_unsorted(array, checked):
     return search_result
 
 
-def strazsas_unsorted(array_param, checked):
+def sentinel_unsorted(array_param, checked):
     search_result = {"found": False, "index": -1}
     array = array_param[:]
     array.append(checked)

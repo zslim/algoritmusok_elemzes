@@ -52,7 +52,7 @@ def main():
     # generate_and_write("merge", [base.merge_sorted], AlgorithmType.BASE, sorted_input=True)
 
     # Search algorithms
-    # generate_and_write("search_unsorted", [search.linear_unsorted, search.strazsas_unsorted], AlgorithmType.SEARCH)
+    generate_and_write("search_unsorted", [search.linear_unsorted, search.sentinel_unsorted], AlgorithmType.SEARCH)
     generate_and_write("search_sorted",
                        [search.linear_sorted, search.binary_sorted, search.jump_sorted],
                        AlgorithmType.SEARCH,

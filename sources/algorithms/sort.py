@@ -41,14 +41,17 @@ def comb_sort(array):
     shrink = 1.3
     out = array[:]
     gap = len(out)
+    is_sorted = False
 
-    while gap > 1:
+    while not is_sorted:  # More than one iteration may be needed with gap = 1
         gap = math.floor(gap / shrink)
         if gap <= 1:
             gap = 1
+            is_sorted = True
         for i in range(len(out) - gap):
             if out[i] > out[i + gap]:
                 util.swap_elements(out, i, i + gap)
+                is_sorted = False
     return out
 
 

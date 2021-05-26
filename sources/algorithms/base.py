@@ -1,3 +1,6 @@
+import sort
+
+
 def _does_include(array, element):
     i = 0
     while i < len(array) and element != array[i]:
@@ -45,3 +48,9 @@ def merge_sorted(array1, array2):
     else:
         result += array1[i:]
     return result
+
+
+def merge_unsorted(array1, array2):
+    sort.quicksort(array1)
+    sort.quicksort(array2)
+    return merge_sorted(array1, array2)

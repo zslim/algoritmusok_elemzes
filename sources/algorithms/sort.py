@@ -1,5 +1,7 @@
 import math
 
+import util
+
 
 def insertion_sort(array):
     out = []
@@ -20,9 +22,7 @@ def bubble_sort(array):
     for i in range(n):
         for j in range(n - i - 1):
             if out[j] > out[j + 1]:
-                temp = out[j]
-                out[j] = out[j + 1]
-                out[j + 1] = temp
+                util.swap_elements(out, j, j + 1)
     return out
 
 
@@ -33,9 +33,7 @@ def selection_sort(array):
         for j in range(i + 1, len(out)):
             if out[j] < out[index_of_minimal_element]:
                 index_of_minimal_element = j
-        temp = out[index_of_minimal_element]
-        out[index_of_minimal_element] = out[i]
-        out[i] = temp
+        util.swap_elements(out, i, index_of_minimal_element)
     return out
 
 
@@ -50,7 +48,7 @@ def comb_sort(array):
             gap = 1
         for i in range(len(out) - gap):
             if out[i] > out[i + gap]:
-                out[i], out[i + gap] = out[i + gap], out[i]
+                util.swap_elements(out, i, i + gap)
     return out
 
 
@@ -63,7 +61,7 @@ def enhanced_cocktail_sort(array):
         swapped = False
         for i in range(low, high):
             if out[i] > out[i + 1]:
-                out[i], out[i + 1] = out[i + 1], out[i]
+                util.swap_elements(out, i, i + 1)
                 swapped = True
 
         if not swapped:
@@ -74,7 +72,7 @@ def enhanced_cocktail_sort(array):
 
         for i in range(high, low, -1):
             if out[i] < out[i - 1]:
-                out[i - 1], out[i] = out[i], out[i - 1]
+                util.swap_elements(out, i, i - 1)
                 swapped = True
 
         if not swapped:
@@ -82,3 +80,23 @@ def enhanced_cocktail_sort(array):
         low += 1
 
     return out
+
+
+def quicksort_partition(array, low, high):
+    # array[high] will be our pivot value
+    pivot_position = low
+    for i in range(low, high):
+        if array[i] <= array[high]:
+            util.swap_elements(array, i, pivot_position)
+            pivot_position += 1
+    util.swap_elements(array, pivot_position, high)
+    return pivot_position
+
+
+def quicksort(array, low=0, high=-1):
+    if high == -1:
+        high = len(array) - 1
+    if low < high:
+        pivot_index = quicksort_partition(array, low, high)
+        quicksort(array, low, pivot_index - 1)
+        quicksort(array, pivot_index + 1, high)

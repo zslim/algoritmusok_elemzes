@@ -31,3 +31,7 @@ def assert_all_elements_equal(list_of_results):
 
 def concat_function_names(function_list):
     return ", ".join([func.__name__ for func in function_list])
+
+
+def swap_elements(array, index1, index2):  # In place; lists are passed by reference by default
+    array[index1], array[index2] = array[index2], array[index1]

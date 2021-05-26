@@ -1,5 +1,9 @@
 from datetime import datetime
 
+import log
+
+LOGGER = log.get_logger(__name__)
+
 
 def create_file_name(name):
     now = datetime.now()
@@ -24,17 +28,14 @@ def parse_search_result(dict_string):
 
 def assert_all_elements_equal(list_of_results):
     first = list_of_results[0]
-    printed_results = "\n".join([str(result) for result in list_of_results])
+    # printed_results = "\n".join([str(result) for result in list_of_results])
     for element in list_of_results:
         comparisons = [a == b for a, b in zip(first, element)]
         if not all(comparisons):
-            fails = [numbers for numbers, match in zip(zip(first, element), comparisons) if not match]
-            print(f"Fails: {fails}")
-            raise AssertionError(f"Unequal values:\n{printed_results}")
-
-
-def concat_function_names(function_list):
-    return ", ".join([func.__name__ for func in function_list])
+            if list_of_results[-1] != "recursion error":
+                fails = [numbers for numbers, match in zip(zip(first, element), comparisons) if not match]
+                LOGGER.info(f"Fails: {fails}")
+            raise AssertionError(f"Unequal values:\n{first}\n{element}")
 
 
 def swap_elements(array, index1, index2):  # In place; lists are passed by reference by default

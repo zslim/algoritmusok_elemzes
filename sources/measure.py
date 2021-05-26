@@ -35,6 +35,7 @@ def recording(function_list, algorithm_type, input_control, *args, **kwargs):
     try:
         util.assert_all_elements_equal(returned_values)
     except AssertionError as e:
+        record["quicksortRecursionError"] = 1
         LOGGER.info(e)
 
     # Record input control note
@@ -50,10 +51,11 @@ def recording(function_list, algorithm_type, input_control, *args, **kwargs):
     return record
 
 
-def measure_sorting_algorithms(function_list, input_lengths, number_of_runs, sorted_input):
+def measure_sorting_algorithms(function_list, input_lengths, number_of_runs, sorted_input):  # unused argument for uniformization
     result = []
     start = datetime.now()
     for length in input_lengths:
+        LOGGER.info(f"Input length: {length}; starting {number_of_runs} runs")
         for n in range(number_of_runs):
             if n % 3 == 1:
                 input_order = ArrayOrder.SORTED
@@ -64,7 +66,7 @@ def measure_sorting_algorithms(function_list, input_lengths, number_of_runs, sor
             input_list = input_generator.generate_numeric_array(length, input_order)
             record = recording(function_list, AlgorithmType.SORT, input_order, input_list)
             result.append(record)
-    LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
+        LOGGER.info(log.get_elapsed_time_log_string(function_list, datetime.now(), start))
     return result
 
 

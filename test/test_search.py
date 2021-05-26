@@ -44,14 +44,14 @@ def test_linear_sorted(array, checked, expected):
 
 @pytest.mark.parametrize("array,checked,expected",
                          [
-                             ([2, 4, 7, 9, 15], 9, {"found": True, "index": 3}),
-                             ([2, 4, 7, 9, 15], 2, {"found": True, "index": 0}),
-                             ([2, 4, 7, 9, 15], 15, {"found": True, "index": 4}),
+                             ([2, 4, 7, 9, 9, 15], 9, {"found": True, "index": 3}),
+                             ([2, 2, 4, 7, 9, 15], 2, {"found": True, "index": 0}),
+                             ([2, 4, 7, 9, 15, 15], 15, {"found": True, "index": 4}),
                              ([2, 4, 7, 9, 15], 0, {"found": False, "index": -1}),
                              ([2, 4, 7, 9, 15], 10, {"found": False, "index": -1}),
                              ([2, 4, 7, 9, 15], 20, {"found": False, "index": -1}),
                          ])
-def test_binary_sorted(array, checked, expected):
+def test_binary_sorted(array, checked, expected):  # TODO: ahol a keresett elemből kettő is van, melyiket találja meg?
     actual = search.binary_sorted(array, checked)
     testing_util.assert_search_result(actual, expected)
 
